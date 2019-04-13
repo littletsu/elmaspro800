@@ -1,15 +1,15 @@
 var Discord = require('discord.js');
-var client = new Discord.Client();
-var config = {prefix: "pro!"};
-
+var client = new Discord.Client(); //client? no grasias prefiero "ProClient"
+var config = {prefix: "pro!"}; //best prefix XDXD
+// XD lol XDXXDXD
 client.on("ready", () => {
-  console.log("el mas proo 800 esta redy :sunglasses:")
+  console.log("el mas proo 800 esta redy :sunglasses:") //q pro
 })
 
 client.on("message", message => {
   try {
         if (message.author.bot) return;
-        if(message.mentions.users.first().id == "566499804813983745") return message.reply("mi prefiks es pro! qcresi no¿ XD");
+        if(message.mentions.users.first() && message.mentions.users.first().id == "566499804813983745") return message.reply("mi prefiks es pro! qcresi no¿. mi comando de ayuda es help XD XD");
         if (message.content.indexOf(config.prefix) !== 0) return;
 
         const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
