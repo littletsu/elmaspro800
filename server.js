@@ -9,6 +9,7 @@ client.on("ready", () => {
 client.on("message", message => {
   try {
         if (message.author.bot) return;
+        if(message.mentions.users.first().id == "566499804813983745") return message.reply("mi prefiks es pro! qcresi no¿ XD");
         if (message.content.indexOf(config.prefix) !== 0) return;
 
         const args = message.content.slice(config.prefix.length).trim().split(/ +/g);

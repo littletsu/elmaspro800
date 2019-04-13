@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "discord.js": "github:discordjs/discord.js#master"
+    "discord.js": "^11.4.2"
   },
   "engines": {
     "node": "8.x"
