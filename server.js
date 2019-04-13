@@ -1,22 +1,27 @@
-// server.js
-// where your node app starts
+var Discord = require('discord.js');
+var client = new Discord.Client();
+var config = {prefix: "pro!"};
 
-// init project
-const express = require('express');
-const app = express();
+client.on("ready", () => {
+  console.log("el mas proo 800 esta redy :sunglasses:")
+})
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+client.on("message", message => {
+  try {
+        if (message.author.bot) return;
+        if (message.content.indexOf(config.prefix) !== 0) return;
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+        const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+        let command = args.shift().toLowerCase();
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/views/index.html');
-});
+        let commandFile = require(`./src/commands/${command}.js`);
+        commandFile.run(client, message, args);
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, function() {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
+  } catch (err) {
+        if (err.message === `Cannot read property 'config' of undefined`) return;
+        if (err.code == "MODULE_NOT_FOUND") return;
+        console.error(err);
+  }
+})
+
+client.login(process.env.TOKEN)
