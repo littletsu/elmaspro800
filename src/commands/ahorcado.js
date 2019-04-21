@@ -1,4 +1,82 @@
 var jugando = new Set();
+const AhorcadoStates = [`   ____
+  |    |      
+  |    o      
+  |   /|\     
+  |    |
+  |   / \
+ _|_
+|   |______
+|          |
+|__________|`,
+                       `   ____
+  |    |      
+  |    o      
+  |   /|\     
+  |    |
+  |   / 
+ _|_
+|   |______
+|          |
+|__________|`,
+                       `   ____
+  |    |      
+  |    o      
+  |   /|\     
+  |    |
+  |    
+ _|_
+|   |______
+|          |
+|__________|`, `   ____
+  |    |      
+  |    o      
+  |   /|\     
+  |    
+  |   
+ _|_
+|   |______
+|          |
+|__________|`,
+                       `   ____
+  |    |      
+  |    o      
+  |   /|     
+  |    
+  |   
+ _|_
+|   |______
+|          |
+|__________|`,`   ____
+  |    |      
+  |    o      
+  |    |     
+  |    
+  |   
+ _|_
+|   |______
+|          |
+|__________|`,`   ____
+  |    |      
+  |    o      
+  |     
+  |    
+  |   
+ _|_
+|   |______
+|          |
+|__________|`,
+                       `   ____
+  |    |      
+  |          
+  |       
+  |    
+  |   
+ _|_
+|   |______
+|          |
+|__________|`]
+
 
 module.exports.run = (client, message, args) => {
   let palabra = null;
@@ -24,7 +102,7 @@ module.exports.run = (client, message, args) => {
       
       
       DMCollector.once("collect", CollectedMessage => {
-        palabra = CollectedMessage.content;
+        palabra = CollectedMessage.content.toLowerCase();
         hasCollected = true;
         message.channel.send(`La palabra se ha elegido. <@${jugador.id}>, quieres jugar al ahorcado con <@${message.author.id}>? (No reacciones hasta que se pongan todas las reacciones!)`).then((PromptMessage) => {
           PromptMessage.react("✅").then(() => PromptMessage.react("❌").then(() => {
@@ -38,7 +116,9 @@ module.exports.run = (client, message, args) => {
               console.log(reaction)
               switch(reaction.emoji.name) {
                 case "✅":
-                  message.reply("Empezando el juego!");
+                  message.reply("Empezando el juego!").then(AhorcadoMessage => {
+                    
+                  });
                   break;
                 case "❌":
                   message.reply(":(");
@@ -49,11 +129,11 @@ module.exports.run = (client, message, args) => {
             })
             
             PromptCollector.once("end", () => {
-              if(!hasCollectedPrompt) return {
-                message.reply("El usuario no respondio a tiempo.")
+              if(!hasCollectedPrompt) {
+                message.reply("El usuario no respondio a tiempo.");
                 jugando.delete(message.author.id);
-              jugando.delete(jugador.id);
-            };
+                jugando.delete(jugador.id);
+              };
               
             })
             
