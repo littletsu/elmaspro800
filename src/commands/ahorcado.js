@@ -1,6 +1,8 @@
+var jugando = new Set();
+
 module.exports.run = (client, message, args) => {
   let palabra = null;
-  
+  if(jugando.has(message.author.id)) return message.reply("Ya estas jugando con alguien mas, o estas en una decision.");
   if(!message.mentions.users.first()) return message.reply("Necesitas mencionar a alguien con quien jugar!");
   
   let jugador = message.mentions.users.first();
@@ -22,10 +24,29 @@ module.exports.run = (client, message, args) => {
         hasCollected = true;
         message.channel.send(`La palabra se ha elegido. <@${jugador.id}>, quieres jugar al ahorcado con <@${message.author.id}>? (No reacciones hasta que se pongan todas las reacciones!)`).then((PromptMessage) => {
           PromptMessage.react("✅").then(() => PromptMessage.react("❌").then(() => {
+            PromptMessage.edit(`La palabra se ha elegido. <@${jugador.id}>, quieres jugar al ahorcado con <@${message.author.id}>?`);
             let filter = (reaction, user) => (reaction.emoji.name === '❌' || reaction.emoji.name === '✅') && user.id === jugador.id;
-            let collector = message.createReactionCollector(filter, { time: 60e3 });
-            collector.on('collect', r => console.log(`Collected ${r.emoji.name}`));
-            collector.on('end', collected => console.log(`Collected ${collected.size} items`));
+            let PromptCollector = message.createReactionCollector(filter, { time: 60e3 });
+            let hasCollectedPrompt = false;
+            jugando.add(message.author.id);
+            jugando.add(jugador.id);
+            PromptCollector.once("collected", (reaction) => {
+              hasCollectedPrompt = true;
+              switch(reaction.emoji.name) {
+                case "✅":
+                  message.reply("Empezando el juego!");
+                  break;
+                case "❌":
+                  message.reply(":(");
+                  
+                  break;
+              }
+            })
+            
+            PromptCollector.once("end", () => {
+              if(hasCollectedPrompt) return message.reply("El usuario no respondio a tiempo.");
+            })
+            
           }));
         })
       })
