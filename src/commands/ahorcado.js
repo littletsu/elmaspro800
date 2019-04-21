@@ -117,25 +117,34 @@ module.exports.run = (client, message, args) => {
               switch(reaction.emoji.name) {
                 case "✅":
                   let palabranoseq = palabra.split('');
-                  let unrevealedWord = "_ ".repeat(palabranoseq.length).split('');
+                  let unrevealedWord = "_".repeat(palabranoseq.length).split('');
                   var gameState = 7;
+                  PromptMessage.delete()
+                  msg.delete()
                   message.reply("Empezando el juego!").then(AhorcadoMessage => {
                     AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
 
-Palabra: ${unrevealedWord.join('')}\`\`\``).then(() => {
+Palabra: ${unrevealedWord.join(' ')}\`\`\``).then(() => {
                       const PalabrasFilter = m => m.author == jugador;
                       let hasWin = false;
                       
-                      const PalabrasCollector = message.channel.createMessageCollector(PalabrasFilter, { time: 60e9 });
+                      const PalabrasCollector = message.channel.createMessageCollector(PalabrasFilter, { time: 60e3 });
                       PalabrasCollector.on('collect', m => {
                         if(palabranoseq.includes(m.content)) {
                           palabranoseq.forEach((char, i) => {
                             if(char == m.content) unrevealedWord[i] = m.content
+                            if(palabranoseq == unrevealedWord) message.channel.send(`<@${jugador.id}> ha ganado el juego!`);
+                            console.log(palabranoseq)
                           })
                         }
                         console.log(unrevealedWord)
+                        m.delete()
                       });
-                      PalabrasCollector.on('end', collected => message.reply("Tiempo de la partida se ha acabado."));
+                      PalabrasCollector.on('end', collected => {
+                        message.reply("Tiempo de la partida se ha acabado.")
+                        jugando.delete(message.author.id);
+                        jugando.delete(jugador.id);
+                      });
                     })
                   });
                   break;
