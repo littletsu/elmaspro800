@@ -29,12 +29,13 @@ module.exports.run = (client, message, args) => {
         message.channel.send(`La palabra se ha elegido. <@${jugador.id}>, quieres jugar al ahorcado con <@${message.author.id}>? (No reacciones hasta que se pongan todas las reacciones!)`).then((PromptMessage) => {
           PromptMessage.react("✅").then(() => PromptMessage.react("❌").then(() => {
             PromptMessage.edit(`La palabra se ha elegido. <@${jugador.id}>, quieres jugar al ahorcado con <@${message.author.id}>?`);
-            let filter = (reaction, user) => (reaction.emoji.name === '❌' || reaction.emoji.name === '✅') && user.id === jugador.id;
-            let PromptCollector = message.createReactionCollector(filter, { time: 15e3});
+            let ReactionFilter = (reaction, user) => user.id === jugador.id;
+            let PromptCollector = PromptMessage.createReactionCollector(ReactionFilter, { time: 15e3});
             let hasCollectedPrompt = false;
 
-            PromptCollector.once("collected", (reaction) => {
+            PromptCollector.once("collect", (reaction) => {
               hasCollectedPrompt = true;
+              console.log(reaction)
               switch(reaction.emoji.name) {
                 case "✅":
                   message.reply("Empezando el juego!");
@@ -48,9 +49,12 @@ module.exports.run = (client, message, args) => {
             })
             
             PromptCollector.once("end", () => {
-              if(!hasCollectedPrompt) return message.reply("El usuario no respondio a tiempo.");
-              jugando.delete(message.author.id);
+              if(!hasCollectedPrompt) return {
+                message.reply("El usuario no respondio a tiempo.")
+                jugando.delete(message.author.id);
               jugando.delete(jugador.id);
+            };
+              
             })
             
           }));
@@ -58,10 +62,12 @@ module.exports.run = (client, message, args) => {
       })
       
       DMCollector.once("end", () => {
-        jugando.delete(message.author.id);
-        jugando.delete(jugador.id);
-        message.channel.send("Se acabo el tiempo.");
-        if(!hasCollected) return message.author.send("Se acabo el tiempo.");
+        if(!hasCollected) {
+          jugando.delete(message.author.id);
+          jugando.delete(jugador.id);
+          message.channel.send("Se acabo el tiempo.");
+          return message.author.send("Se acabo el tiempo.");
+        }
       })
     })
   })
