@@ -107,7 +107,7 @@ module.exports.run = (client, message, args) => {
 
                         PromptCollector.once("collect", (reaction) => {
                             hasCollectedPrompt = true;
-                            console.log(reaction)
+                            //console.log(reaction)
                             switch (reaction.emoji.name) {
                                 case "✅":
                                     let palabranoseq = palabra.split('');
@@ -135,6 +135,9 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``).then(() => {
 Palabra: ${unrevealedWord.join(' ')}\`\`\``);
                                                             // console.log(palabranoseq)
                                                         })
+                                                        if(JSON.stringify(palabranoseq) == JSON.stringify(unrevealedWord)) {
+                                                        
+                                                        }
                                                     } else {
                                                         gameState--
                                                         AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
@@ -142,17 +145,19 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``);
 Palabra: ${unrevealedWord.join(' ')}\`\`\``)
                                                         if (gameState <= 0) {
                                                             AhorcadoMessage.edit(`<@${message.author.id}> ha ganado! La palabra era: ${palabra}`)
+                                                            jugando.delete(message.author.id);
+                                                            jugando.delete(jugador.id);
                                                         }
                                                     }
 
-                                                    console.log(unrevealedWord)
+                                                    //console.log(unrevealedWord)
                                                     m.delete()
                                                 }
                                             });
 
                                             PalabrasCollector.on('end', collected => {
                                               if(!(hasWin ^ hasLost)) {
-                                                message.reply("Tiempo de la partida se ha acabado.")
+                                                AhorcadoMessage.edit(`Se ha acabado el tiempo! La palabra era: ${palabra}`)
                                                 jugando.delete(message.author.id);
                                                 jugando.delete(jugador.id);
                                               }
