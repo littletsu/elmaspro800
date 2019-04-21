@@ -9,10 +9,14 @@ module.exports.run = (client, message, args) => {
   
   if(jugador.bot) return message.reply("No puedes jugar con bots.");
   if(jugador == message.author) return message.reply("Menciona a alguien mas!");
+  jugando.add(message.author.id);
+  jugando.add(jugador.id);
   
   message.reply("Envia la palabra que quisieras usar para este juego a mis mensajes directos! (tienes 15 segundos!)").then((msg) => {
     message.author.send("Envia la palabra!").catch(() => {
       msg.edit("Porfavor activa tus mensajes directos para que me puedas enviar la palabra!")
+      jugando.delete(message.author.id);
+      jugando.delete(jugador.id);
     }).then((m) => {
       let filter = mes => mes.author.id == message.author.id;
       let DMCollector = m.channel.createMessageCollector(filter, {time: 15e3})
@@ -26,10 +30,9 @@ module.exports.run = (client, message, args) => {
           PromptMessage.react("✅").then(() => PromptMessage.react("❌").then(() => {
             PromptMessage.edit(`La palabra se ha elegido. <@${jugador.id}>, quieres jugar al ahorcado con <@${message.author.id}>?`);
             let filter = (reaction, user) => (reaction.emoji.name === '❌' || reaction.emoji.name === '✅') && user.id === jugador.id;
-            let PromptCollector = message.createReactionCollector(filter, { time: 60e3 });
+            let PromptCollector = message.createReactionCollector(filter, { time: 15e3});
             let hasCollectedPrompt = false;
-            jugando.add(message.author.id);
-            jugando.add(jugador.id);
+
             PromptCollector.once("collected", (reaction) => {
               hasCollectedPrompt = true;
               switch(reaction.emoji.name) {
@@ -38,13 +41,16 @@ module.exports.run = (client, message, args) => {
                   break;
                 case "❌":
                   message.reply(":(");
-                  
+                  jugando.delete(message.author.id);
+                  jugando.delete(jugador.id);
                   break;
               }
             })
             
             PromptCollector.once("end", () => {
-              if(hasCollectedPrompt) return message.reply("El usuario no respondio a tiempo.");
+              if(!hasCollectedPrompt) return message.reply("El usuario no respondio a tiempo.");
+              jugando.delete(message.author.id);
+              jugando.delete(jugador.id);
             })
             
           }));
@@ -52,6 +58,9 @@ module.exports.run = (client, message, args) => {
       })
       
       DMCollector.once("end", () => {
+        jugando.delete(message.author.id);
+        jugando.delete(jugador.id);
+        message.channel.send("Se acabo el tiempo.");
         if(!hasCollected) return message.author.send("Se acabo el tiempo.");
       })
     })
