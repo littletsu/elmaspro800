@@ -1,4 +1,5 @@
 var jugando = new Set();
+const SymbolRegEx = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 const AhorcadoStates = [`
 |----------------
 |              |
@@ -106,7 +107,7 @@ module.exports.run = (client, message, args) => {
                         });
                         let hasCollectedPrompt = false;
 
-                        PromptCollector.once("collect", (reaction) => {
+                        PromptCollector.once("collect", async (reaction) => {
                             hasCollectedPrompt = true;
                             //console.log(reaction)
                             switch (reaction.emoji.name) {
@@ -116,6 +117,7 @@ module.exports.run = (client, message, args) => {
                                     var gameState = 7;
                                     PromptMessage.delete()
                                     msg.delete()
+                                    let warning = await message.channel.send("Para no saturar al bot, porfavor no pongas otra letra hasta que se elimine la anterior!");
                                     message.reply("Empezando el juego!").then(AhorcadoMessage => {
                                         AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
 
@@ -138,6 +140,7 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``).then(() => {
                                                           AhorcadoMessage.edit(`<@${jugador.id}> ha ganado! La palabra era: ${palabra}`);
                                                           jugando.delete(message.author.id);
                                                           jugando.delete(jugador.id);
+                                                          warning.delete();
                                                         } else {
                                                           AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
 
@@ -152,6 +155,7 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``)
                                                             AhorcadoMessage.edit(`<@${message.author.id}> ha ganado! La palabra era: ${palabra}`)
                                                             jugando.delete(message.author.id);
                                                             jugando.delete(jugador.id);
+                                                            warning.delete();
                                                         }
                                                     }
 
@@ -165,6 +169,7 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``)
                                                 AhorcadoMessage.edit(`Se ha acabado el tiempo! La palabra era: ${palabra}`)
                                                 jugando.delete(message.author.id);
                                                 jugando.delete(jugador.id);
+                                                warning.delete();
                                               }
                                             });
                                         })
@@ -183,6 +188,7 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``)
                                 message.reply("El usuario no respondio a tiempo.");
                                 jugando.delete(message.author.id);
                                 jugando.delete(jugador.id);
+
                             };
 
                         })
