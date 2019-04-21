@@ -133,10 +133,18 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``).then(() => {
                         if(palabranoseq.includes(m.content)) {
                           palabranoseq.forEach((char, i) => {
                             if(char == m.content) unrevealedWord[i] = m.content
-                            if(palabranoseq == unrevealedWord) message.channel.send(`<@${jugador.id}> ha ganado el juego!`);
-                            console.log(palabranoseq)
+                            AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
+
+Palabra: ${unrevealedWord.join(' ')}\`\`\``);
+                           // console.log(palabranoseq)
                           })
+                        } else {
+                          gameState--
+                          AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
+
+Palabra: ${unrevealedWord.join(' ')}\`\`\``)
                         }
+                        
                         console.log(unrevealedWord)
                         m.delete()
                       });
