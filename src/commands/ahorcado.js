@@ -116,8 +116,9 @@ module.exports.run = (client, message, args) => {
               console.log(reaction)
               switch(reaction.emoji.name) {
                 case "✅":
+                  var gameState = 7;
                   message.reply("Empezando el juego!").then(AhorcadoMessage => {
-                    
+                    AhorcadoMessage.edit(`${AhorcadoStates[gameState]}`)
                   });
                   break;
                 case "❌":
