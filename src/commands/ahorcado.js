@@ -116,11 +116,23 @@ module.exports.run = (client, message, args) => {
               console.log(reaction)
               switch(reaction.emoji.name) {
                 case "✅":
+                  let palabranoseq = palabra.split('');
                   var gameState = 7;
                   message.reply("Empezando el juego!").then(AhorcadoMessage => {
                     AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
 
-Palabra: ${"_ ". repeat(palabra.split('').length)}\`\`\``)
+Palabra: ${"_ ". repeat(palabranoseq.length)}\`\`\``).then(() => {
+                      const PalabrasFilter = m => m.author == jugador;
+                      let hasWin = false;
+                      
+                      const PalabrasCollector = message.channel.createMessageCollector(PalabrasFilter, { time: 6000e9 });
+                      PalabrasCollector.on('collect', m => {
+                        if(palabranoseq.includes(m.content)) {
+                          
+                        }
+                      });
+                      PalabrasCollector.on('end', collected => console.log(`Collected ${collected.size} items`));
+                    })
                   });
                   break;
                 case "❌":
