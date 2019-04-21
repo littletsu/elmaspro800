@@ -118,7 +118,9 @@ module.exports.run = (client, message, args) => {
                 case "✅":
                   var gameState = 7;
                   message.reply("Empezando el juego!").then(AhorcadoMessage => {
-                    AhorcadoMessage.edit(`${AhorcadoStates[gameState]}`)
+                    AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
+
+Palabra: ${"_ ". repeat(palabra.split('').length)}\`\`\``)
                   });
                   break;
                 case "❌":
