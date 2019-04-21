@@ -71,7 +71,7 @@ const AhorcadoStates = [`
 
 module.exports.run = (client, message, args) => {
     let palabra = null;
-    let tiempoDePartida = parseInt(args[0]) || 60e3
+    let tiempoDePartida = parseInt(args[1]) || 60e3
     if (jugando.has(message.author.id)) return message.reply("Ya estas jugando con alguien mas, o estas en una decision.");
     if (!message.mentions.users.first()) return message.reply("Necesitas mencionar a alguien con quien jugar!");
 
@@ -121,7 +121,8 @@ module.exports.run = (client, message, args) => {
                                     message.reply("Empezando el juego!").then(AhorcadoMessage => {
                                         AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
 
-Palabra: ${unrevealedWord.join(' ')}\`\`\``).then(() => {
+Palabra: ${unrevealedWord.join(' ')}
+Tiene Simbolos: ${SymbolRegEx.test(palabra) ? "Si" : "No"}\`\`\``).then(() => {
                                             const PalabrasFilter = m => m.author == jugador;
                                             let hasWin = false;
                                             let hasLost = false;
@@ -144,13 +145,15 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``).then(() => {
                                                         } else {
                                                           AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
 
-Palabra: ${unrevealedWord.join(' ')}\`\`\``);
+Palabra: ${unrevealedWord.join(' ')}
+Tiene Simbolos: ${SymbolRegEx.test(palabra) ? "Si" : "No"}\`\`\``);
                                                         };
                                                     } else {
                                                         gameState--
                                                         AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
 
-Palabra: ${unrevealedWord.join(' ')}\`\`\``)
+Palabra: ${unrevealedWord.join(' ')}
+Tiene Simbolos: ${SymbolRegEx.test(palabra) ? "Si" : "No"}\`\`\``)
                                                         if (gameState <= 0) {
                                                             AhorcadoMessage.edit(`<@${message.author.id}> ha ganado! La palabra era: ${palabra}`)
                                                             jugando.delete(message.author.id);
