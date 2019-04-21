@@ -70,6 +70,7 @@ const AhorcadoStates = [`
 
 module.exports.run = (client, message, args) => {
     let palabra = null;
+    let tiempoDePartida = parseInt(args[0]) || 60e3
     if (jugando.has(message.author.id)) return message.reply("Ya estas jugando con alguien mas, o estas en una decision.");
     if (!message.mentions.users.first()) return message.reply("Necesitas mencionar a alguien con quien jugar!");
 
@@ -123,21 +124,25 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``).then(() => {
                                             let hasWin = false;
                                             let hasLost = false;
                                             const PalabrasCollector = message.channel.createMessageCollector(PalabrasFilter, {
-                                                time: 60e3
+                                                time: tiempoDePartida
                                             });
                                             PalabrasCollector.on('collect', m => {
                                                 if (!(hasWin ^ hasLost)) {
                                                     if (palabranoseq.includes(m.content)) {
                                                         palabranoseq.forEach((char, i) => {
                                                             if (char == m.content) unrevealedWord[i] = m.content
-                                                            AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
-
-Palabra: ${unrevealedWord.join(' ')}\`\`\``);
                                                             // console.log(palabranoseq)
                                                         })
                                                         if(JSON.stringify(palabranoseq) == JSON.stringify(unrevealedWord)) {
-                                                        
-                                                        }
+                                                          hasWin = true;
+                                                          AhorcadoMessage.edit(`<@${jugador.id}> ha ganado! La palabra era: ${palabra}`);
+                                                          jugando.delete(message.author.id);
+                                                          jugando.delete(jugador.id);
+                                                        } else {
+                                                          AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
+
+Palabra: ${unrevealedWord.join(' ')}\`\`\``);
+                                                        };
                                                     } else {
                                                         gameState--
                                                         AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
@@ -156,7 +161,7 @@ Palabra: ${unrevealedWord.join(' ')}\`\`\``)
                                             });
 
                                             PalabrasCollector.on('end', collected => {
-                                              if(!(hasWin ^ hasLost)) {
+                                              if(!(hasWin)) {
                                                 AhorcadoMessage.edit(`Se ha acabado el tiempo! La palabra era: ${palabra}`)
                                                 jugando.delete(message.author.id);
                                                 jugando.delete(jugador.id);
