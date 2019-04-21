@@ -117,21 +117,25 @@ module.exports.run = (client, message, args) => {
               switch(reaction.emoji.name) {
                 case "✅":
                   let palabranoseq = palabra.split('');
+                  let unrevealedWord = "_ ".repeat(palabranoseq.length).split('');
                   var gameState = 7;
                   message.reply("Empezando el juego!").then(AhorcadoMessage => {
                     AhorcadoMessage.edit(`\`\`\`${AhorcadoStates[gameState]}
 
-Palabra: ${"_ ". repeat(palabranoseq.length)}\`\`\``).then(() => {
+Palabra: ${unrevealedWord.join('')}\`\`\``).then(() => {
                       const PalabrasFilter = m => m.author == jugador;
                       let hasWin = false;
                       
-                      const PalabrasCollector = message.channel.createMessageCollector(PalabrasFilter, { time: 6000e9 });
+                      const PalabrasCollector = message.channel.createMessageCollector(PalabrasFilter, { time: 60e9 });
                       PalabrasCollector.on('collect', m => {
                         if(palabranoseq.includes(m.content)) {
-                          
+                          palabranoseq.forEach((char, i) => {
+                            if(char == m.content) unrevealedWord[i] = m.content
+                          })
                         }
+                        console.log(unrevealedWord)
                       });
-                      PalabrasCollector.on('end', collected => console.log(`Collected ${collected.size} items`));
+                      PalabrasCollector.on('end', collected => message.reply("Tiempo de la partida se ha acabado."));
                     })
                   });
                   break;
