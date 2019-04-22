@@ -130,7 +130,7 @@ Tiene Simbolos: ${SymbolRegEx.test(palabra) ? "Si" : "No"}\`\`\``).then(() => {
                                                 time: tiempoDePartida
                                             });
                                             PalabrasCollector.on('collect', m => {
-                                                if (!(hasWin ^ hasLost)) {
+                                                if (!(hasWin || hasLost)) {
                                                     if (palabranoseq.includes(m.content)) {
                                                         palabranoseq.forEach((char, i) => {
                                                             if (char == m.content) unrevealedWord[i] = m.content
