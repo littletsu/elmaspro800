@@ -16,6 +16,7 @@ Era el mejor de los tiempos, era el peor de los tiempos, era la edad de la sabid
 
 const { createCanvas, loadImage } = require('canvas')
 const { Attachment } = require('discord.js')
+const watch = require('timewatch')
 
 module.exports.run = (client, message, args) => {
   console.log("hola")
@@ -37,9 +38,12 @@ module.exports.run = (client, message, args) => {
           let filter = (message) => message.content == quote
           let collector = message.channel.createMessageCollector(filter, {time: 600000});
           let doNotEnd = false;
+          watch.start()
           collector.once('collect', (m) => {
             doNotEnd = true;
-            message.channel.send(`<@${m.author.id}> ha ganado!`)
+            watch.stop()
+            m.delete()
+            message.channel.send(`<@${m.author.id}> ha ganado! (tardo: ${watch.time() / 1000}s)`)
           })
           
           collector.on('end', () => {
