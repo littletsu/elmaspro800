@@ -168,8 +168,9 @@ Tiene Simbolos: ${SymbolRegEx.test(palabra) ? "Si" : "No"}\`\`\``)
                                             });
 
                                             PalabrasCollector.on('end', collected => {
-                                              if(!(hasWin)) {
+                                              if(!hasWin) {
                                                 AhorcadoMessage.edit(`Se ha acabado el tiempo! La palabra era: ${palabra}`)
+                                                hasWin = true;
                                                 jugando.delete(message.author.id);
                                                 jugando.delete(jugador.id);
                                                 warning.delete();
