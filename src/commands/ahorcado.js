@@ -130,7 +130,7 @@ Tiene Simbolos: ${SymbolRegEx.test(palabra) ? "Si" : "No"}\`\`\``).then(() => {
                                                 time: tiempoDePartida
                                             });
                                             PalabrasCollector.on('collect', m => {
-                                                if (!(hasWin || hasLost)) {
+                                                if (!hasWin) {
                                                     if (palabranoseq.includes(m.content)) {
                                                         palabranoseq.forEach((char, i) => {
                                                             if (char == m.content) unrevealedWord[i] = m.content
@@ -159,6 +159,7 @@ Tiene Simbolos: ${SymbolRegEx.test(palabra) ? "Si" : "No"}\`\`\``)
                                                             jugando.delete(message.author.id);
                                                             jugando.delete(jugador.id);
                                                             warning.delete();
+                                                            hasWin = true
                                                         }
                                                     }
 
