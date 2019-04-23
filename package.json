@@ -12,7 +12,8 @@
   "dependencies": {
     "express": "^4.16.4",
     "discord.js": "^11.4.2",
-    "specialsymbols": "^1.0.0"
+    "specialsymbols": "^1.0.0",
+    "canvas": "^2.4.1"
   },
   "engines": {
     "node": "8.x"

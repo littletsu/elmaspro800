@@ -15,8 +15,10 @@ De pronto se deslizó por el pasillo, al pasar por mi lado sus sorprendentes pup
 Era el mejor de los tiempos, era el peor de los tiempos, era la edad de la sabiduría, era la edad de la insensatez, era la época de la creencia, era la época de la incredulidad, era la estación de la luz, era la estación de la oscuridad...`.split('\n')
 
 const { createCanvas, loadImage } = require('canvas')
+const { Attachment } = require('discord.js')
 
 module.exports.run = (client, message, args) => {
+  console.log("hola")
   message.channel.send("Empezando en 6...").then(msg => {
     var i = 6, min = 0;
 
@@ -28,7 +30,7 @@ module.exports.run = (client, message, args) => {
       ctx.fillStyle = "#ffffff"
       ctx.fillText(Quotes[Math.floor(Math.random() * Quotes.length)].match(/.{1,45}/g).join('\n'), 50, 160)
       
-      msg.edit("Empezamos! Se mas rapido que los demas en escribir lo siguiente: ")
+      msg.edit("Empezamos! Se mas rapido que los demas en escribir lo siguiente: ", new Attachment(canvas.toBuffer(), "typeracer.jpg"))
     }
     
     function Bucle() {
