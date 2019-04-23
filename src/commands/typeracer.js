@@ -1,4 +1,7 @@
-let Quotes = `Amor y deseo son dos cosas diferentes; que no todo lo que se ama se desea, ni todo lo que se desea se ama
+let Quotes = `La disciplina y el trabajo constante son las piedras de sobre las que se afila el cuchillo del talento hasta que se vuelve lo suficientemente afilado, con suerte, para cortar incluso la carne más dura.
+El sueño podría haber sido más que un sueño. Era como si una puerta en la pared de la realidad se hubiera entreabierto... y ahora todo tipo de cosas no deseadas volaban a través de ella.
+Caemos de la matriz a la tumba, de una oscuridad y hacia la otra, recordando poco de uno y sin saber nada del otro... excepto a través de la fe.
+Amor y deseo son dos cosas diferentes; que no todo lo que se ama se desea, ni todo lo que se desea se ama
 Y cuando te hayas consolado, te alegrarás de haberme conocido
 El hombre llega mucho más lejos para evitar lo que teme que para alcanzar lo que desea
 ¡Qué maravilloso es que nadie necesite esperar ni un solo momento antes de comenzar a mejorar el mundo!
