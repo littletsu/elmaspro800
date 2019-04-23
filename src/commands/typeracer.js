@@ -3,7 +3,7 @@ module.exports.run = (client, message, args) => {
     var i = 6, min = 0;
 
     function EmpezarJuego() {
-      msg.edit()
+      msg.edit("Empezamos! Se mas rapido que los demas en escribir lo siguiente: ")
     }
     
     function Bucle() {
