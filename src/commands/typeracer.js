@@ -23,14 +23,32 @@ module.exports.run = (client, message, args) => {
     var i = 6, min = 0;
 
     function EmpezarJuego() {
+      let quote = Quotes[Math.floor(Math.random() * Quotes.length)]
+      
       const canvas = createCanvas(1290, 640)
       const ctx = canvas.getContext('2d')
       
       ctx.font = '50px Impact'
       ctx.fillStyle = "#ffffff"
-      ctx.fillText(Quotes[Math.floor(Math.random() * Quotes.length)].match(/.{1,45}/g).join('\n'), 50, 160)
+      ctx.fillText(quote.match(/.{1,45}/g).join('\n'), 50, 160)
       
-      msg.edit("Empezamos! Se mas rapido que los demas en escribir lo siguiente: ", new Attachment(canvas.toBuffer(), "typeracer.jpg"))
+      msg.edit("Empezamos! Se mas rapido que los demas en escribir lo siguiente (1 min): ").then(() => {
+        message.channel.send({files: [canvas.toBuffer()]}).then(() => {
+          let filter = (message) => message.content == quote
+          let collector = message.channel.createMessageCollector(filter, {time: 600000});
+          let doNotEnd = false;
+          collector.once('collect', (m) => {
+            doNotEnd = true;
+            message.channel.send(`<@${m.author.id}> ha ganado!`)
+          })
+          
+          collector.on('end', () => {
+            if(!doNotEnd) {
+              message.channel.send(`Nadie alcanzo a escribir la cita!`)
+            }
+          })
+        })
+      })
     }
     
     function Bucle() {
