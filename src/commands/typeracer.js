@@ -47,6 +47,7 @@ module.exports.run = (client, message, args) => {
             watch.stop()
             m.delete()
             message.channel.send(`<@${m.author.id}> ha ganado! (tardo: ${watch.time() / 1000}s)`)
+            watch.reset()
           })
           
           collector.on('end', () => {
