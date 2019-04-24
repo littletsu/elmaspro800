@@ -1,4 +1,7 @@
-let Quotes = `No hay buenos amigos, no hay malos amigos; Solo las personas con las que quieres estar o necesitas estar. Personas que construyen sus casas en tu corazón.
+let Quotes = `¡Todo el dinero y la vida que uno pueda desear! Las dos cosas que la mayor parte de los seres humanos elegirían... El problema es que los humanos tienen el don de elegir precisamente las cosas que son peores para ellos.
+Soñé contigo. Soñé que vagabas en la oscuridad, y yo también. Nos encontramos el uno al otro. Nos encontramos en la oscuridad.
+Nunca sabemos en qué vidas influimos, ni cuándo ni por qué. No hasta que el futuro se coma el presente, de todos modos. Sabemos cuando es demasiado tarde.
+No hay buenos amigos, no hay malos amigos; Solo las personas con las que quieres estar o necesitas estar. Personas que construyen sus casas en tu corazón.
 La disciplina y el trabajo constante son las piedras de sobre las que se afila el cuchillo del talento hasta que se vuelve lo suficientemente afilado, con suerte, para cortar incluso la carne más dura.
 El sueño podría haber sido más que un sueño. Era como si una puerta en la pared de la realidad se hubiera entreabierto... y ahora todo tipo de cosas no deseadas volaban a través de ella.
 Caemos de la matriz a la tumba, de una oscuridad y hacia la otra, recordando poco de uno y sin saber nada del otro... excepto a través de la fe.
