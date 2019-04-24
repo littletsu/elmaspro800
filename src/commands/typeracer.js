@@ -1,4 +1,5 @@
-let Quotes = `La disciplina y el trabajo constante son las piedras de sobre las que se afila el cuchillo del talento hasta que se vuelve lo suficientemente afilado, con suerte, para cortar incluso la carne más dura.
+let Quotes = `No hay buenos amigos, no hay malos amigos; Solo las personas con las que quieres estar o necesitas estar. Personas que construyen sus casas en tu corazón.
+La disciplina y el trabajo constante son las piedras de sobre las que se afila el cuchillo del talento hasta que se vuelve lo suficientemente afilado, con suerte, para cortar incluso la carne más dura.
 El sueño podría haber sido más que un sueño. Era como si una puerta en la pared de la realidad se hubiera entreabierto... y ahora todo tipo de cosas no deseadas volaban a través de ella.
 Caemos de la matriz a la tumba, de una oscuridad y hacia la otra, recordando poco de uno y sin saber nada del otro... excepto a través de la fe.
 Amor y deseo son dos cosas diferentes; que no todo lo que se ama se desea, ni todo lo que se desea se ama
