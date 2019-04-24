@@ -1,4 +1,5 @@
-let Quotes = `¡Todo el dinero y la vida que uno pueda desear! Las dos cosas que la mayor parte de los seres humanos elegirían... El problema es que los humanos tienen el don de elegir precisamente las cosas que son peores para ellos.
+let Quotes = `Yo los amaba, amaba a mis padres y a mis hermanos. Pero era egoísta, Harry, más egoísta de lo que tú, que eres una persona asombrosamente desinteresada, podrías imaginar.
+¡Todo el dinero y la vida que uno pueda desear! Las dos cosas que la mayor parte de los seres humanos elegirían... El problema es que los humanos tienen el don de elegir precisamente las cosas que son peores para ellos.
 Soñé contigo. Soñé que vagabas en la oscuridad, y yo también. Nos encontramos el uno al otro. Nos encontramos en la oscuridad.
 Nunca sabemos en qué vidas influimos, ni cuándo ni por qué. No hasta que el futuro se coma el presente, de todos modos. Sabemos cuando es demasiado tarde.
 No hay buenos amigos, no hay malos amigos; Solo las personas con las que quieres estar o necesitas estar. Personas que construyen sus casas en tu corazón.
@@ -26,7 +27,6 @@ const { Attachment } = require('discord.js')
 const watch = require('timewatch')
 
 module.exports.run = (client, message, args) => {
-  console.log("hola")
   message.channel.send("Empezando en 6...").then(msg => {
     var i = 6, min = 0;
 

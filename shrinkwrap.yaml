@@ -2,6 +2,7 @@ dependencies:
   canvas: 2.4.1
   discord.js: 11.4.2
   express: 4.16.4
+  mega-dtbs: 0.1.16
   specialsymbols: 1.1.0
   timewatch: 1.0.0
 packages:
@@ -399,6 +400,12 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
+  /mega-dtbs/0.1.16:
+    dependencies:
+      path: 0.12.7
+    dev: false
+    resolution:
+      integrity: sha512-QamyXEwSj0ICoF/TMhfhacNsUyGlECohp22rUge9P9KxswLPKB5vZZvRlD8wUjpx9yJmwBO8kf5SwpTv8SsArw==
   /merge-descriptors/1.0.1:
     dev: false
     resolution:
@@ -596,6 +603,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+  /path/0.12.7:
+    dependencies:
+      process: 0.11.10
+      util: 0.10.4
+    dev: false
+    resolution:
+      integrity: sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=
   /prism-media/0.0.3:
     dev: false
     resolution:
@@ -604,6 +618,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MtEC1TqN0EU5nephaJ4rAtThHtC86dNN9qCuEhtshvpVBkAW5ZO7BASN9REnF9eoXGcRub+pFuKEpOHE+HbEMw==
+  /process/0.11.10:
+    dev: false
+    engines:
+      node: '>= 0.6.0'
+    resolution:
+      integrity: sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
   /proxy-addr/2.0.4:
     dependencies:
       forwarded: 0.1.2
@@ -834,6 +854,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+  /util/0.10.4:
+    dependencies:
+      inherits: 2.0.3
+    dev: false
+    resolution:
+      integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==
   /utils-merge/1.0.1:
     dev: false
     engines:
@@ -874,5 +900,6 @@ specifiers:
   canvas: ^2.4.1
   discord.js: ^11.4.2
   express: ^4.16.4
+  mega-dtbs: ^0.1.16
   specialsymbols: ^1.0.0
   timewatch: ^1.0.0

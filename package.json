@@ -14,7 +14,8 @@
     "specialsymbols": "^1.0.0",
     "canvas": "^2.4.1",
     "discord.js": "^11.4.2",
-    "timewatch": "^1.0.0"
+    "timewatch": "^1.0.0",
+    "mega-dtbs": "^0.1.16"
   },
   "engines": {
     "node": "8.x"
