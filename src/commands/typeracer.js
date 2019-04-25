@@ -51,6 +51,7 @@ module.exports.run = (client, message, args) => {
             watch.stop()
             m.delete()
             client.TypeRacerDB.sumar(m.author.id + '.wins', 1)
+            client.TypeRacerDB.push(m.author.id + '.record', watch.time() / 1000)
             message.channel.send(`<@${m.author.id}> ha ganado! (tardo: ${watch.time() / 1000}s)`)
             watch.reset()
           })

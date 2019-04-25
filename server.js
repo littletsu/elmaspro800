@@ -5,7 +5,7 @@ const db = require('mega-dtbs');
 
 client.TypeRacerDB = new db.crearDB("TypeRacer");
 client.TypeRacerDB.checkUser = (user) => {
-  if(!client.TypeRacerDB.tiene(user.id || user)) client.TypeRacerDB.agregar(user.id || user, {wins: 0})
+  if(!client.TypeRacerDB.tiene(user.id || user)) client.TypeRacerDB.agregar(user.id || user, {wins: 0, record: []})
 } 
 
 // XD lol XDXXDXD
