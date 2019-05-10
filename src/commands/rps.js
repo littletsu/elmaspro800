@@ -38,11 +38,37 @@ module.exports.run = (client, message, args) => {
               message.channel.send(`El juego concluira en los mensajes privados!`).then(() => {
                 player1.send(`Elije! (Espera a que se pongan todas las reacciones!)`).then((P1Msg) => {                  
                   player2.send(`Elije! (Espera a que se pongan todas las reacciones!)`).then((P2Msg) => {
-                    for(var i = 0; i <= RPSReactions.length; i++) {
-                      P1Msg.react(RPSReactions[i]);
-                      P2Msg.react(RPSReactions[i]);
+                    var reacted = 0;
+                    for(reacted; reacted < RPSReactions.length; reacted++) {
+                      P1Msg.react(RPSReactions[reacted]);
+                      P2Msg.react(RPSReactions[reacted]);
                     }
-                  }).catch(() => {
+                    
+                    // Creando un collector individual para cada mensaje
+                    
+                    var P1Ready = false;
+                    var P2Ready = false;
+                    
+                    var P1Filter = (_, user) => user.id == player1.id;
+                    var P1Collector = P1Msg.createReactionCollector(P1Filter, {time: 60000*5});
+                    var P1Collected = false;
+                    
+                    var P2Filter = (_, user) => user.id == player2.id; 
+                    var P2Collector = P2Msg.createReactionCollector(P2Filter, {time: 60000*5});
+                    var P2Collected = false;
+                    
+                    // Eventos para el primer collector
+                    
+                    P1Collector.once('collect', (reaction) => {
+                    
+                    })
+                    
+                    P1Collector.once('end', () => {
+                      if(!P
+                    });
+                    
+                  }).catch((err) => {
+                    console.warn(err)
                     message.reply(`El juego no podra concluir, ${player2} tiene los mensajes privados desactivados! :(`);
                     Jugando.delete(player1.id);
                     Jugando.delete(player2.id);
