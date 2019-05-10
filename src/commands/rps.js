@@ -46,25 +46,43 @@ module.exports.run = (client, message, args) => {
                     
                     // Creando un collector individual para cada mensaje
                     
-                    var P1Ready = false;
-                    var P2Ready = false;
-                    
                     var P1Filter = (_, user) => user.id == player1.id;
                     var P1Collector = P1Msg.createReactionCollector(P1Filter, {time: 60000*5});
                     var P1Collected = false;
+                    var P1Selected = null;
                     
                     var P2Filter = (_, user) => user.id == player2.id; 
                     var P2Collector = P2Msg.createReactionCollector(P2Filter, {time: 60000*5});
                     var P2Collected = false;
+                    var P2Selected = null;
                     
                     // Eventos para el primer collector
                     
                     P1Collector.once('collect', (reaction) => {
-                    
+                      switch(reaction.emoji.name) {
+                        // Piedra
+                        case RPSReactions[0]:
+                            P1Selected = RPSReactions[0];
+                          break;
+                          
+                        // Papel
+                        case RPSReactions[1]:
+                            P1Selected = RPSReactions[1];
+                          break;
+                          
+                        // Tijera
+                        case RPSReactions[2]:
+                            P1Selected = RPSReactions[2];
+                          break;
+                      }
                     })
                     
                     P1Collector.once('end', () => {
-                      if(!P
+                      if(!P1Collected || !P2Collected) {
+                        message.channel.send(`Se ha acabado el tiempo para reaccionar!`);
+                        Jugando.delete(player1.id);
+                        Jugando.delete(player2.id);
+                      }
                     });
                     
                   }).catch((err) => {
