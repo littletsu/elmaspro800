@@ -59,6 +59,7 @@ module.exports.run = (client, message, args) => {
                     // Eventos para el primer collector
                     
                     P1Collector.once('collect', (reaction) => {
+                      P1Collected = true
                       switch(reaction.emoji.name) {
                         // Piedra
                         case RPSReactions[0]:
@@ -74,6 +75,13 @@ module.exports.run = (client, message, args) => {
                         case RPSReactions[2]:
                             P1Selected = RPSReactions[2];
                           break;
+                      }
+                      
+                      P1Collected = true
+                      if(!P2Collected) {
+                        P1Msg.edit(`Has seleccionado ${P1Selected}! Esperando a ${player2}...`)
+                      } else {
+                        if(P2Selected == RPS
                       }
                     })
                     
