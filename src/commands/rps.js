@@ -81,7 +81,7 @@ module.exports.run = (client, message, args) => {
                       if(!P2Collected) {
                         P1Msg.edit(`Has seleccionado ${P1Selected}! Esperando a ${player2}...`)
                       } else {
-                        if(P2Selected == RPS
+                        
                       }
                     })
                     
