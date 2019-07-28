@@ -13,7 +13,7 @@
     "express": "^4.16.4",
     "specialsymbols": "^1.0.0",
     "canvas": "^2.4.1",
-    "discord.js": "^11.4.2",
+    "discord.js": "^11.5.1",
     "timewatch": "^1.0.0",
     "mega-dtbs": "^0.1.16"
   },
