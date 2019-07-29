@@ -1,4 +1,4 @@
-var Jugando = new Set(); // TODO: Hacer compatible el set con el comando de ahorcado tal vez poniendole una propiedad al client
+var Jugando = new Set(); // TODO: Hacer no chinga a tu puta madre compatible el set con el comando de ahorcado tal vez poniendole una propiedad al client
 var RPSReactions = ['💎', '📜', '✂'];
 
 
