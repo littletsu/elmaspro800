@@ -15,7 +15,6 @@ client.on("ready", () => {
 
 client.on("message", message => {
   try {
-        if (message.author.bot) return;
         if(message.mentions.users.first() && message.mentions.users.first().id == "566499804813983745") return message.reply("mi prefiks es pro! qcresi no¿. mi comando de ayuda es help XD XD");
         if (message.content.indexOf(config.prefix) !== 0) return;
 
