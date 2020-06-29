@@ -20,64 +20,98 @@ Resulta extraño pensar que, cuando uno teme algo que va a ocurrir y quisiera qu
 Reflexionar serena, muy serenamente, es mejor que tomar decisiones desesperadas.
 Crearía un perfume que no sólo fuera humano, sino sobrehumano. Un aroma de ángel, tan indescriptiblemente bueno y pletórico de vigor que quien lo oliera quedaría hechizado y no tendría más remedio que amar a la persona que lo llevara...
 De pronto se deslizó por el pasillo, al pasar por mi lado sus sorprendentes pupilas de oro se detuvieron un instante en las mías. Debí morir un poco. No podía respirar y se me detuvo el pulso
-Era el mejor de los tiempos, era el peor de los tiempos, era la edad de la sabiduría, era la edad de la insensatez, era la época de la creencia, era la época de la incredulidad, era la estación de la luz, era la estación de la oscuridad...`.split('\n')
+Era el mejor de los tiempos, era el peor de los tiempos, era la edad de la sabiduría, era la edad de la insensatez, era la época de la creencia, era la época de la incredulidad, era la estación de la luz, era la estación de la oscuridad...`.split(
+    '\n'
+);
 
-const { createCanvas, loadImage } = require('canvas')
-const { Attachment } = require('discord.js')
-const watch = require('timewatch')
+const { createCanvas, loadImage } = require('canvas');
+const watch = require('timewatch');
 
 module.exports.run = (client, message, args) => {
-  message.channel.send("Empezando en 6...").then(msg => {
-    var i = 6, min = 0;
+    message.channel.send('Empezando en 6...').then(msg => {
+        var i = 6,
+            min = 0;
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            var words = text.split(' ');
+            var line = '';
 
-    function EmpezarJuego() {
-      let quote = Quotes[Math.floor(Math.random() * Quotes.length)]
-      
-      const canvas = createCanvas(1290, 640)
-      const ctx = canvas.getContext('2d')
-      
-      ctx.font = '50px Impact'
-      ctx.fillStyle = "#ffffff"
-      ctx.fillText(quote.match(/.{1,45}/g).join('\n'), 50, 160)
-      
-      msg.edit("Empezamos! Se mas rapido que los demas en escribir lo siguiente (1 min): ").then(() => {
-        message.channel.send({files: [canvas.toBuffer()]}).then(() => {
-          let filter = (message) => message.content == quote
-          let collector = message.channel.createMessageCollector(filter, {time: 600000});
-          let doNotEnd = false;
-          watch.start()
-          collector.once('collect', (m) => {
-            doNotEnd = true;
-            watch.stop()
-            m.delete()
-            client.TypeRacerDB.sumar(m.author.id + '.wins', 1)
-            client.TypeRacerDB.push(m.author.id + '.record', watch.time() / 1000)
-            message.channel.send(`<@${m.author.id}> ha ganado! (tardo: ${watch.time() / 1000}s)`)
-            watch.reset()
-          })
-          
-          collector.on('end', () => {
-            if(!doNotEnd) {
-              message.channel.send(`Nadie alcanzo a escribir la cita!`)
+            for (var n = 0; n < words.length; n++) {
+                var testLine = line + words[n] + ' ';
+                var metrics = ctx.measureText(testLine);
+                var testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
             }
-          })
-        })
-      })
-    }
-    
-    function Bucle() {
-      i--
-      if(!(i < min)) {
-        setTimeout(() => {
-          msg.edit(`Empezando en ${i}...`).then(() => {
-            Bucle();
-          })
-        }, 1000)
-      } else {
-        EmpezarJuego();
-      }
-    } 
-    Bucle();
-    
-  })
-}
+            ctx.fillText(line, x, y);
+        }
+        function EmpezarJuego() {
+            let quote = Quotes[Math.floor(Math.random() * Quotes.length)];
+
+            const canvas = createCanvas(800, 444);
+            const ctx = canvas.getContext('2d');
+
+            ctx.font = '50px Impact';
+            ctx.fillStyle = '#ffffff';
+            //ctx.fillText(quote.match(/.{1,29}/g).join('-\n'), 50, 50);
+            wrapText(ctx, quote, 50, 50, 750, 50);
+            msg.edit(
+                'Empezamos! Se mas rapido que los demas en escribir lo siguiente (1 min): '
+            ).then(() => {
+                message.channel
+                    .send({ files: [canvas.toBuffer()] })
+                    .then(() => {
+                        let filter = message => message.content == quote;
+                        let collector = message.channel.createMessageCollector(
+                            filter,
+                            { time: 600000 }
+                        );
+                        let doNotEnd = false;
+                        watch.start();
+                        collector.once('collect', m => {
+                            doNotEnd = true;
+                            watch.stop();
+                            m.delete();
+                            client.TypeRacerDB.sumar(m.author.id + '.wins', 1);
+                            client.TypeRacerDB.push(
+                                m.author.id + '.record',
+                                watch.time() / 1000
+                            );
+                            message.channel.send(
+                                `<@${m.author.id}> ha ganado! (tardo: ${
+                                    watch.time() / 1000
+                                }s)`
+                            );
+                            watch.reset();
+                        });
+
+                        collector.on('end', () => {
+                            if (!doNotEnd) {
+                                message.channel.send(
+                                    `Nadie alcanzo a escribir la cita!`
+                                );
+                            }
+                        });
+                    });
+            });
+        }
+
+        function Bucle() {
+            i--;
+            if (!(i < min)) {
+                setTimeout(() => {
+                    msg.edit(`Empezando en ${i}...`).then(() => {
+                        Bucle();
+                    });
+                }, 1000);
+            } else {
+                EmpezarJuego();
+            }
+        }
+        Bucle();
+    });
+};
